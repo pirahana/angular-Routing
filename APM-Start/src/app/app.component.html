@@ -1,3 +1,7 @@
+<span class="fa fa-spinner spinner" *ngIf="isLoading">
+
+</span>
+
 <nav class="navbar navbar-expand navbar-light bg-light">
   <a class="navbar-brand">{{pageTitle}}</a>
   <ul class="navbar-nav">
@@ -19,7 +23,16 @@
       <a class="nav-link">Welcome {{ userName }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link">Show Messages</a>
+      <a class="nav-link"
+      (click)="displayMessages()"
+      *ngIf="!messageService.isDisplayed">
+      Show Messages</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"
+      (click)="hideMessages()"
+      *ngIf="messageService.isDisplayed">
+      Hide Messages</a>
     </li>
     <li class="nav-item"
         *ngIf="!isLoggedIn">
@@ -32,7 +45,14 @@
     </li>
   </ul>
 </nav>
-<div class="container"
-  [@slideInAnimation]="o.isActivated ? o.activatedRoute: ''">
- <router-outlet #o="outlet"></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10" [@slideInAnimation]="o.isActivated ? o.activatedRoute: ''">
+      <router-outlet #o="outlet"></router-outlet>
+    </div>
+    <div class="col-md-2">
+      <router-outlet name="popup"></router-outlet>
+    </div>
+  </div>
+ 
 </div>
